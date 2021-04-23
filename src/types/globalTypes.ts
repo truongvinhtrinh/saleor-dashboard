@@ -90,6 +90,7 @@ export enum AttributeInputTypeEnum {
   FILE = "FILE",
   MULTISELECT = "MULTISELECT",
   REFERENCE = "REFERENCE",
+  RICH_TEXT = "RICH_TEXT",
 }
 
 export enum AttributeSortField {
@@ -120,6 +121,7 @@ export enum ChannelErrorCode {
   CHANNELS_CURRENCY_MUST_BE_THE_SAME = "CHANNELS_CURRENCY_MUST_BE_THE_SAME",
   CHANNEL_TARGET_ID_MUST_BE_DIFFERENT = "CHANNEL_TARGET_ID_MUST_BE_DIFFERENT",
   CHANNEL_WITH_ORDERS = "CHANNEL_WITH_ORDERS",
+  DUPLICATED_INPUT_ITEM = "DUPLICATED_INPUT_ITEM",
   GRAPHQL_ERROR = "GRAPHQL_ERROR",
   INVALID = "INVALID",
   NOT_FOUND = "NOT_FOUND",
@@ -151,6 +153,7 @@ export enum CollectionSortField {
 
 export enum ConfigurationTypeFieldEnum {
   BOOLEAN = "BOOLEAN",
+  MULTILINE = "MULTILINE",
   PASSWORD = "PASSWORD",
   SECRET = "SECRET",
   SECRETMULTILINE = "SECRETMULTILINE",
@@ -613,12 +616,11 @@ export enum OrderEventsEmailsEnum {
 }
 
 export enum OrderEventsEnum {
+  ADDED_PRODUCTS = "ADDED_PRODUCTS",
   CANCELED = "CANCELED",
   CONFIRMED = "CONFIRMED",
-  DRAFT_ADDED_PRODUCTS = "DRAFT_ADDED_PRODUCTS",
   DRAFT_CREATED = "DRAFT_CREATED",
   DRAFT_CREATED_FROM_REPLACE = "DRAFT_CREATED_FROM_REPLACE",
-  DRAFT_REMOVED_PRODUCTS = "DRAFT_REMOVED_PRODUCTS",
   EMAIL_SENT = "EMAIL_SENT",
   EXTERNAL_SERVICE_NOTIFICATION = "EXTERNAL_SERVICE_NOTIFICATION",
   FULFILLMENT_CANCELED = "FULFILLMENT_CANCELED",
@@ -650,6 +652,7 @@ export enum OrderEventsEnum {
   PAYMENT_VOIDED = "PAYMENT_VOIDED",
   PLACED = "PLACED",
   PLACED_FROM_DRAFT = "PLACED_FROM_DRAFT",
+  REMOVED_PRODUCTS = "REMOVED_PRODUCTS",
   TRACKING_UPDATED = "TRACKING_UPDATED",
   UPDATED_ADDRESS = "UPDATED_ADDRESS",
 }
@@ -806,10 +809,10 @@ export enum ProductFieldEnum {
   COLLECTIONS = "COLLECTIONS",
   DESCRIPTION = "DESCRIPTION",
   NAME = "NAME",
-  PRODUCT_IMAGES = "PRODUCT_IMAGES",
+  PRODUCT_MEDIA = "PRODUCT_MEDIA",
   PRODUCT_TYPE = "PRODUCT_TYPE",
   PRODUCT_WEIGHT = "PRODUCT_WEIGHT",
-  VARIANT_IMAGES = "VARIANT_IMAGES",
+  VARIANT_MEDIA = "VARIANT_MEDIA",
   VARIANT_SKU = "VARIANT_SKU",
   VARIANT_WEIGHT = "VARIANT_WEIGHT",
   VISIBLE = "VISIBLE",
@@ -999,6 +1002,7 @@ export enum WebhookEventTypeEnum {
   INVOICE_DELETED = "INVOICE_DELETED",
   INVOICE_REQUESTED = "INVOICE_REQUESTED",
   INVOICE_SENT = "INVOICE_SENT",
+  NOTIFY_USER = "NOTIFY_USER",
   ORDER_CANCELLED = "ORDER_CANCELLED",
   ORDER_CONFIRMED = "ORDER_CONFIRMED",
   ORDER_CREATED = "ORDER_CREATED",
@@ -1133,6 +1137,7 @@ export interface AttributeUpdateInput {
 export interface AttributeValueCreateInput {
   name: string;
   value?: string | null;
+  richText?: any | null;
 }
 
 export interface AttributeValueInput {
@@ -1141,6 +1146,12 @@ export interface AttributeValueInput {
   file?: string | null;
   contentType?: string | null;
   references?: string[] | null;
+  richText?: any | null;
+}
+
+export interface AttributeValueTranslationInput {
+  name?: string | null;
+  richText?: any | null;
 }
 
 export interface BulkAttributeValueInput {
@@ -1180,6 +1191,7 @@ export interface ChannelCreateInput {
   name: string;
   slug: string;
   currencyCode: string;
+  addShippingZones?: string[] | null;
 }
 
 export interface ChannelDeleteInput {
@@ -1190,6 +1202,8 @@ export interface ChannelUpdateInput {
   isActive?: boolean | null;
   name?: string | null;
   slug?: string | null;
+  addShippingZones?: string[] | null;
+  removeShippingZones?: string[] | null;
 }
 
 export interface CollectionChannelListingUpdateInput {
@@ -1254,6 +1268,7 @@ export interface CustomerInput {
   email?: string | null;
   isActive?: boolean | null;
   note?: string | null;
+  languageCode?: LanguageCodeEnum | null;
 }
 
 export interface DateRangeInput {
@@ -1584,10 +1599,12 @@ export interface ProductChannelListingAddInput {
   visibleInListings?: boolean | null;
   isAvailableForPurchase?: boolean | null;
   availableForPurchaseDate?: any | null;
+  addVariants?: string[] | null;
+  removeVariants?: string[] | null;
 }
 
 export interface ProductChannelListingUpdateInput {
-  addChannels?: ProductChannelListingAddInput[] | null;
+  updateChannels?: ProductChannelListingAddInput[] | null;
   removeChannels?: string[] | null;
 }
 
@@ -1779,6 +1796,7 @@ export interface ShippingPriceExcludeProductsInput {
 
 export interface ShippingPriceInput {
   name?: string | null;
+  description?: any | null;
   minimumOrderWeight?: any | null;
   maximumOrderWeight?: any | null;
   maximumDeliveryDays?: number | null;
@@ -1790,12 +1808,18 @@ export interface ShippingPriceInput {
   inclusionType?: PostalCodeRuleInclusionTypeEnum | null;
 }
 
+export interface ShippingPriceTranslationInput {
+  name?: string | null;
+  description?: any | null;
+}
+
 export interface ShippingZoneCreateInput {
   name?: string | null;
   description?: string | null;
   countries?: (string | null)[] | null;
   default?: boolean | null;
   addWarehouses?: (string | null)[] | null;
+  addChannels?: string[] | null;
 }
 
 export interface ShippingZoneUpdateInput {
@@ -1804,7 +1828,9 @@ export interface ShippingZoneUpdateInput {
   countries?: (string | null)[] | null;
   default?: boolean | null;
   addWarehouses?: (string | null)[] | null;
+  addChannels?: string[] | null;
   removeWarehouses?: (string | null)[] | null;
+  removeChannels?: string[] | null;
 }
 
 export interface ShopSettingsInput {
@@ -1855,7 +1881,7 @@ export interface StaffUserInput {
 
 export interface StockInput {
   warehouse: string;
-  quantity?: number | null;
+  quantity: number;
 }
 
 export interface TranslationInput {
@@ -1873,6 +1899,7 @@ export interface UserCreateInput {
   email?: string | null;
   isActive?: boolean | null;
   note?: string | null;
+  languageCode?: LanguageCodeEnum | null;
   redirectUrl?: string | null;
 }
 

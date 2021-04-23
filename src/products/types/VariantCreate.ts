@@ -41,6 +41,7 @@ export interface VariantCreate_productVariantCreate_productVariant_selectionAttr
   slug: string | null;
   file: VariantCreate_productVariantCreate_productVariant_selectionAttributes_attribute_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface VariantCreate_productVariantCreate_productVariant_selectionAttributes_attribute {
@@ -67,6 +68,7 @@ export interface VariantCreate_productVariantCreate_productVariant_selectionAttr
   slug: string | null;
   file: VariantCreate_productVariantCreate_productVariant_selectionAttributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface VariantCreate_productVariantCreate_productVariant_selectionAttributes {
@@ -88,6 +90,7 @@ export interface VariantCreate_productVariantCreate_productVariant_nonSelectionA
   slug: string | null;
   file: VariantCreate_productVariantCreate_productVariant_nonSelectionAttributes_attribute_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface VariantCreate_productVariantCreate_productVariant_nonSelectionAttributes_attribute {
@@ -114,6 +117,7 @@ export interface VariantCreate_productVariantCreate_productVariant_nonSelectionA
   slug: string | null;
   file: VariantCreate_productVariantCreate_productVariant_nonSelectionAttributes_values_file | null;
   reference: string | null;
+  richText: any | null;
 }
 
 export interface VariantCreate_productVariantCreate_productVariant_nonSelectionAttributes {
@@ -192,6 +196,8 @@ export interface VariantCreate_productVariantCreate_productVariant_product_chann
 
 export interface VariantCreate_productVariantCreate_productVariant_product_channelListings {
   __typename: "ProductChannelListing";
+  publicationDate: any | null;
+  isPublished: boolean;
   channel: VariantCreate_productVariantCreate_productVariant_product_channelListings_channel;
   pricing: VariantCreate_productVariantCreate_productVariant_product_channelListings_pricing | null;
 }
