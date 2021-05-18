@@ -1,7 +1,4 @@
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
+import { Button, Card, CardContent, Typography } from "@material-ui/core";
 import CardTitle from "@saleor/components/CardTitle";
 import ExternalLink from "@saleor/components/ExternalLink";
 import Form from "@saleor/components/Form";
@@ -184,7 +181,12 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
           )
         ) : (
           <>
-            <Typography className={classes.userEmail}>{user.email}</Typography>
+            <Typography
+              className={classes.userEmail}
+              data-test-id="customer-email"
+            >
+              {user.email}
+            </Typography>
             <RequirePermissions
               userPermissions={userPermissions}
               requiredPermissions={[PermissionEnum.MANAGE_USERS]}
@@ -257,6 +259,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
           {canEditAddresses && (
             <div className={classes.sectionHeaderToolbar}>
               <Button
+                data-test-id="edit-shipping-address"
                 color="primary"
                 variant="text"
                 onClick={onShippingAddressEdit}
@@ -314,6 +317,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
           {canEditAddresses && (
             <div className={classes.sectionHeaderToolbar}>
               <Button
+                data-test-id="edit-billing-address"
                 color="primary"
                 variant="text"
                 onClick={onBillingAddressEdit}
