@@ -245,6 +245,7 @@
     "heroku-postbuild": "npm run build",
     "serve:lhci": "NODE_ENV=production npm run server",
     "start": "webpack-dev-server -d",
+    "startdev": "APP_MOUNT_URI=/ STATIC_URL=/ API_URI=http://localhost:8000/graphql/ webpack-dev-server -d",
     "storybook": "start-storybook -p 3000 -c src/storybook/",
     "cy:run": "cypress run",
     "cy:run:record": "npm run cy:run -- --record",
